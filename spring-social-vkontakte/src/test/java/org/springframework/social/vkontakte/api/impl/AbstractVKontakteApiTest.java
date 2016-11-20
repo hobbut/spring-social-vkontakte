@@ -34,7 +34,7 @@ public class AbstractVKontakteApiTest {
 
 	@Before
 	public void setup() {
-		vkontakte = new VKontakteTemplate("ACCESS_TOKEN", "CLIENT_SECRET");
+		vkontakte = new VKontakteTemplate("ACCESS_TOKEN", "CLIENT_SECRET", "some@email.com");
 		mockServer = MockRestServiceServer.createServer(vkontakte.getRestTemplate());
 		responseHeaders = new HttpHeaders();
 		responseHeaders.setContentType(MediaType.APPLICATION_JSON);

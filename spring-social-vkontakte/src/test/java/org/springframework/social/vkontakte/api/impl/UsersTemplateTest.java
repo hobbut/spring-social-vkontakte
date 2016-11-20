@@ -33,7 +33,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 /**
  * {@link UsersTemplate} test
- * 
+ *
  * @author vkolodrevskiy
  */
 public class UsersTemplateTest extends AbstractVKontakteApiTest {
@@ -87,7 +87,7 @@ public class UsersTemplateTest extends AbstractVKontakteApiTest {
     @Test(expected = VKontakteErrorException.class)
     public void getUsers_expiredToken() {
         mockServer
-               .expect(requestTo("https://api.vk.com/method/users.get"))
+                .expect(requestTo("https://api.vk.com/method/users.get"))
                 .andExpect(method(POST)).andRespond(withSuccess(jsonResource("error-code-5"), APPLICATION_JSON));
         String[] userIds = {"1", "2"};
         vkontakte.usersOperations().getUsers(Arrays.asList(userIds));

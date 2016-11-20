@@ -31,14 +31,17 @@ import java.util.List;
 /**
  * User operations.
  * <br>Here should be implemented methods, that can be found under http://vk.com/dev/methods <code>Users</code> section.
+ *
  * @author vkolodrevskiy
  */
 class UsersTemplate extends AbstractVKontakteOperations implements IUsersOperations {
     private final RestTemplate restTemplate;
+    private final String email;
 
-    public UsersTemplate(RestTemplate restTemplate, String accessToken, ObjectMapper objectMapper, boolean isAuthorizedForUser) {
+    public UsersTemplate(RestTemplate restTemplate, String accessToken, ObjectMapper objectMapper, boolean isAuthorizedForUser, String email) {
         super(isAuthorizedForUser, accessToken, objectMapper);
         this.restTemplate = restTemplate;
+        this.email = email;
     }
 
     public List<VKontakteProfile> getUsers(List<String> userIds) {
@@ -55,7 +58,7 @@ class UsersTemplate extends AbstractVKontakteOperations implements IUsersOperati
 
         if (userIds != null) {
             StringBuilder sb = new StringBuilder();
-            for(String uid : userIds){
+            for (String uid : userIds) {
                 sb.append(uid).append(",");
             }
             sb.deleteCharAt(sb.length() - 1);
@@ -65,7 +68,7 @@ class UsersTemplate extends AbstractVKontakteOperations implements IUsersOperati
             data.set("name_case", nameCase.toString());
         }
 
-        data.set("fields", fields != null? fields: IUsersOperations.DEFAULT_FIELDS);
+        data.set("fields", fields != null ? fields : IUsersOperations.DEFAULT_FIELDS);
 
         // see documentation under http://vk.com/dev/users.get
         URI uri = makeOperationPOST("users.get", data, ApiVersion.VERSION_5_27);
@@ -76,10 +79,14 @@ class UsersTemplate extends AbstractVKontakteOperations implements IUsersOperati
     }
 
     public VKontakteProfile getUser() {
-        return getUsers(null).get(0);
+        VKontakteProfile vKontakteProfile = getUsers(null).get(0);
+        vKontakteProfile.setEmail(email);
+        return vKontakteProfile;
     }
 
     public VKontakteProfile getUser(String fields) {
-        return getUsers(null, fields).get(0);
+        VKontakteProfile vKontakteProfile =  getUsers(null, fields).get(0);
+        vKontakteProfile.setEmail(email);
+        return vKontakteProfile;
     }
 }

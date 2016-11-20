@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * Mixin for {@link org.springframework.social.vkontakte.api.VKontakteProfile}
- * 
+ *
  * @author vkolodrevskiy
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

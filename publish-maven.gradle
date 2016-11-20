@@ -18,23 +18,14 @@ install {
 // this was done for security issues
 uploadArchives {
     repositories {
-        def user, password
-        if(project.hasProperty('fugruUser')) {
-            user = project.fugruUser
-        } else {
-            user = 'guest'
-        }
-        if(project.hasProperty('fugruPassword')) {
-            password = project.fugruPassword
-        } else {
-            password = ''
-        }
-
         mavenDeployer {
             customizePom(pom, project)
 
-            snapshotRepository(url: 'http://fugru.com/archiva/repository/snapshots/') {
-                authentication(userName: user, password: password);
+            snapshotRepository(url: 'http://mvn.jnpe.ru/artifactory/ext-snapshot-local/') {
+                authentication(userName: 'hobbut', password: 'abljtr');
+            }
+            repository(url: 'http://mvn.jnpe.ru/artifactory/ext-release-local/') {
+                authentication(userName: 'hobbut', password: 'abljtr');
             }
         }
     }

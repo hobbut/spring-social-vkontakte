@@ -53,6 +53,8 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
     private ObjectMapper objectMapper;
 
     private final String accessToken;
+
+    private final String email;
     
     protected final String clientSecret;
 
@@ -61,12 +63,14 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
         initialize();
         this.accessToken = null;
         this.clientSecret = null;
+        this.email = null;
     }
 
-    public VKontakteTemplate(String accessToken, String clientSecret) {
+    public VKontakteTemplate(String accessToken, String clientSecret, String email) {
         super(accessToken);
         this.accessToken = accessToken;
         this.clientSecret = clientSecret;
+        this.email = email;
         initialize();
     }
 
@@ -95,7 +99,7 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
     }
 
     private void initSubApis() {
-        usersOperations = new UsersTemplate(getRestTemplate(), accessToken, objectMapper, isAuthorized());
+        usersOperations = new UsersTemplate(getRestTemplate(), accessToken, objectMapper, isAuthorized(), email);
         friendsOperations = new FriendsTemplate(getRestTemplate(), accessToken, objectMapper, isAuthorized());
         wallOperations = new WallTemplate(getRestTemplate(), accessToken, objectMapper, isAuthorized());
         secureOperations = new SecureTemplate(getRestTemplate(), accessToken, objectMapper, isAuthorized(), clientSecret);
